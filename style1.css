@@ -34,8 +34,10 @@ body {
   outline: 2px solid;
 }
 
+/* :active → means when the button is being clicked or pressed down (i.e., while the mouse button is held down). */
 .magic:active {
   box-shadow: none;
+  /* translateY(2px) moves the element 2 pixels downward on the screen — along the Y-axis (vertical axis). */
   transform: translateY(2px);
 }
 
@@ -43,7 +45,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  height: 500px;
+  height: 500px; /* of the container */
   width: 500px;
   position: relative;
   transition: 0.4s ease;
@@ -57,17 +59,25 @@ body {
 .boxes.big .box {
   transform: rotateZ(360deg);
 }
+/* This is what makes the boxes spin when you click the “Magic” button. */
 
 .box {
   background-image: url('https://media.giphy.com/media/EZqwsBSPlvSda/giphy.gif');
   background-repeat: no-repeat;
   background-size: 500px 500px;
   position: relative;
+  /* Needed so the ::before and ::after pseudo-elements can position themselves inside each box. */
   height: 125px;
   width: 125px;
   transition: 0.4s ease;
 }
 
+/* Each .box is a flat square (125×125 px) with a GIF background.
+To make it look 3D, we “fake” its sides using two pseudo-elements:
+
+.box::after → the right face of the cube
+.box::before → the bottom face of the cube
+Each is just a colored rectangle that’s tilted (skewed) to give the illusion of depth. */
 .box::after {
   content: '';
   background-color: #f6e58d;
@@ -78,6 +88,11 @@ body {
   width: 15px;
   transform: skewY(45deg);
 }
+/* top: 8px	Moves it slightly downward to line up correctly with the box face (gives a slight 3D offset).
+right: -15px	Moves it 15px to the right, so it sticks out as the side wall of the cube.
+height: 100%	Makes it the same height as the box (125 px tall).
+width: 15px	Makes it a thin vertical strip (the cube’s side thickness).
+transform: skewY(45deg)	Tilts the rectangle along the Y-axis by 45°, making it look like a diagonal side face (like a cube’s right edge in perspective). */
 
 .box::before {
   content: '';
@@ -89,3 +104,8 @@ body {
   width: 100%;
   transform: skewX(45deg);
 }
+/* bottom: -15px	Moves it 15px below the box — this creates the bottom “face.”
+left: 8px	Shifts it slightly to the right (8px) so the bottom edge lines up with the box’s side.
+height: 15px	Makes it a thin horizontal strip — the cube’s bottom thickness.
+width: 100%	Spans the full width of the box (125 px).
+transform: skewX(45deg)	Tilts the rectangle along the X-axis by 45°, giving the illusion of a 3D bottom face angled toward the viewer. */
